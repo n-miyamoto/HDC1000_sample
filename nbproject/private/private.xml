@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/nozae/Documents/sensprout/dev/HDC1000_sample/src/I2C.h</file>
+            <file>file:/C:/Users/nozae/Documents/sensprout/dev/HDC1000_sample/src/delay.h</file>
+            <file>file:/C:/Users/nozae/Documents/sensprout/dev/HDC1000_sample/src/main.c</file>
+            <file>file:/C:/Users/nozae/Documents/sensprout/dev/HDC1000_sample/src/HDC1000.h</file>
+            <file>file:/C:/Users/nozae/Documents/sensprout/dev/HDC1000_sample/src/I2C.c</file>
+            <file>file:/C:/Users/nozae/Documents/sensprout/dev/HDC1000_sample/src/HDC1000.c</file>
+            <file>file:/C:/Users/nozae/Documents/sensprout/dev/HDC1000_sample/src/delay.c</file>
+        </group>
     </open-files>
 </project-private>

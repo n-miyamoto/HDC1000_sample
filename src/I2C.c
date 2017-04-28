@@ -1,55 +1,72 @@
 
 /*******************************************************************************
-                               *
-*******************************************************************************/
+ *
+ *******************************************************************************/
 #include <xc.h>
 #include "I2C.h"
 
-void I2C_init(void){
+void I2C_init(void) {
     //I2Cの設定
-    I2C1BRG = 157; //100KHz @fcy=16MHz
-    I2C1MSK = 0;
-    I2C1CON = 0x8000; //I2C1イネーブル(PORTB設定前にすること)
+    unsigned int config1 = 0x8000;
+    unsigned int config2 = 157;
+    OpenI2C1(config1, config2);
+    IdleI2C1();
 }
 
 void I2C_start(void) {
-    I2C1CONbits.SEN = 1; //スタート
-    while (I2C1CONbits.SEN) {
-        //スタート終了待ち
-    }
+    StartI2C1();
+    //IFS1bits.MI2C1IF = 0;
+    IdleI2C1();
 }
 
 void I2C_restart(void) {
-    I2C1CONbits.RSEN = 1; //リスタート
-    while (I2C1CONbits.RSEN) {
-        //リスタート終了待ち
-    }
+    RestartI2C1();
+    IdleI2C1();
 }
 
 void I2C_stop(void) {
-    I2C1CONbits.PEN = 1; //ストップ
-    while (I2C1CONbits.PEN) {
-        //ストップコンディション終了待ち
-    }
+    StopI2C1();
+    //IFS1bits.MI2C1IF = 0;
+    IdleI2C1();
 }
 
-void I2C_send(unsigned char data) {
-    char i;
-    I2C1TRN = data;
-    while (I2C1STATbits.TRSTAT) {
+int I2C_send(unsigned char data) {
+    int ans = MasterWriteI2C1(data);
+    while (I2C1STATbits.TBF) {
         //データの送信終了待ち
     }
-    
-    
-    for(i=0;i<20;i++){
-        //ちょっと待つ
+    while (I2C1STATbits.ACKSTAT);
+    //IFS1bits.MI2C1IF = 0;
+    IdleI2C1();
+    return ans;
+}
+
+unsigned char I2C_receive(int ack) {
+    unsigned char data = MasterReadI2C1();
+    if (ack)
+        AckI2C1();
+    else
+        NotAckI2C1();
+    IdleI2C1();
+    return data;
+}
+
+int I2C_puts(unsigned int len, unsigned char *data) {
+    int i;
+    int n = 0;
+    for (i = 0; i < len; ++i) {
+        if (I2C_send(data[i]) == 0) {
+            ++n;
+        }
+    }
+    if (n == len) {
+        return 0;
+    }
+    else {
+        return -1;
     }
 }
 
-int I2C_receive(void){
-    I2C1CONbits.RCEN = 1; //データ受信
-    while (I2C1CONbits.RCEN) {
-        //受信終了待ち
-    }
-    return (I2C1RCV); //EEP読み出し値を返り値にセット    
+int I2C_gets(unsigned int len, unsigned char *data) {
+    return MastergetsI2C1(len, data, 152);
 }

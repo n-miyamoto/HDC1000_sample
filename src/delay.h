@@ -26,17 +26,17 @@ extern "C" {
 #endif /* __cplusplus */
 
 #ifdef __XC16
- extern void __delay32(unsigned long cycles);
+    extern void __delay32(unsigned long cycles);
 #define delay_ms(d) \
   { __delay32( (unsigned long) (((unsigned long long) d)*(FCY)/1000ULL)); }
 #define delay_us(d) \
   { __delay32( (unsigned long) (((unsigned long long) d)*(FCY)/1000000ULL)); }
 #else
- 
- 
 
-void delay_ms (unsigned int n);
-void delay_us (unsigned int n);
+
+
+    void delay_ms(unsigned int n);
+    void delay_us(unsigned int n);
 
 
 #endif
