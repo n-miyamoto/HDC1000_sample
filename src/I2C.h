@@ -5,8 +5,8 @@
  * Created on 2017/04/05, 14:59
  */
 
-#ifndef MYI2C_H
-#define	MYI2C_H
+#ifndef MY_I2C_H
+#define	MY_I2C_H
 
 #ifdef	__cplusplus
 extern "C" {
@@ -18,7 +18,6 @@ extern "C" {
 #define RW_0  0
 #define RW_1  1
 
-#include <i2c.h>
 
 void I2C_init(void);
 void I2C_start(void);

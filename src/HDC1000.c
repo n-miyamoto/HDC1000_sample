@@ -5,7 +5,6 @@
  * Created on 2017/04/05, 14:51
  */
 
-#include <xc.h>
 #include <math.h>
 #include <stdint.h>
 #include "HDC1000.h"
@@ -19,6 +18,9 @@ static double Temp; // 温度の値を保存する変数
 
 static unsigned int Humi_raw;
 static unsigned int Temp_raw;
+
+static int HDC_Send(char reg_adrs, unsigned char *data);
+static int HDC_Receive(char reg_adrs, int len, unsigned char *data);
 
 static uint16_t convert_endian_16(uint16_t i) {
     return ((i >> 8) & 0xFF) | (i << 8);
@@ -70,7 +72,7 @@ int HDC_Init(int id, int address) {
  *    *data    : 読出したデータの格納先を指定する(2byte読込む)                  *
  *    ans      : 0=正常　1=異常(相手からACKが返ってこない)                      *
  *******************************************************************************/
-int HDC_Receive(char reg_adrs, int len, unsigned char *data) {
+static int HDC_Receive(char reg_adrs, int len, unsigned char *data) {
     int ans = 0;
     I2C_start();
     I2C_send((Sensor_adrs << 1) + RW_0);
@@ -96,7 +98,7 @@ int HDC_Receive(char reg_adrs, int len, unsigned char *data) {
  *    *data    : 書出すデータの格納先を指定する(2byte書込む)                    *
  *    ans      : 0=正常　1=異常(相手からACKが返ってこない)                      *
  *******************************************************************************/
-int HDC_Send(char reg_adrs, unsigned char *data) {
+static int HDC_Send(char reg_adrs, unsigned char *data) {
     int ans = 0;
 
     I2C_start();

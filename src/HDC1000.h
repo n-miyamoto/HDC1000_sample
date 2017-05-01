@@ -19,7 +19,7 @@ extern "C" {
 #define _XTAL_FREQ 16000000   // 使用するPIC等により動作周波数値を設定する
 #endif
 
-#define HDC1000_ADRS 0x40     // HDC1000のI2Cアドレス
+#define HDC1000_ADRS    0x40     // HDC1000のI2Cアドレス
 #define HDC1000_ID      0x1000     // HDC1000のID
 
     // デバイスのレジスタアドレス
@@ -35,17 +35,15 @@ extern "C" {
 
 
 
-    // 関数のプロトタイプ宣言
-    int HDC_Init(int id, int address);
-    int HDC_Receive(char reg_adrs, int len, unsigned char *data);
-    int HDC_Send(char reg_adrs, unsigned char *data);
-    int HDC_Read();
+// 関数のプロトタイプ宣言
+int HDC_Init(int id, int address);
+int HDC_Read();
 
-    double HDC_GetTemp();
-    double HDC_GetHumi();
+double HDC_GetTemp();
+double HDC_GetHumi();
 
-    unsigned int HDC_GetTempRaw();
-    unsigned int HDC_GetHumiRaw();
+unsigned int HDC_GetTempRaw();
+unsigned int HDC_GetHumiRaw();
 
 
 
@@ -54,4 +52,3 @@ extern "C" {
 #endif
 
 #endif	/* HDC1000_H */
-
